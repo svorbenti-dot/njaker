@@ -1,0 +1,50 @@
+/* css/vars.css */
+:root {
+  /* Farben */
+  --c-bg:           #F5F0E8;
+  --c-surface:      #FDFAF4;
+  --c-primary:      #C4522A;
+  --c-primary-dark: #A03E1E;
+  --c-gold:         #D4A017;
+  --c-green:        #1B5E3B;
+  --c-green-dark:   #144830;
+  --c-text:         #1A1A1A;
+  --c-text-muted:   #6B6457;
+  --c-border:       #E0D9CC;
+  --c-error:        #B91C1C;
+  --c-success:      #15803D;
+
+  /* Typografie */
+  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.375rem;
+  --text-2xl:  1.75rem;
+  --text-3xl:  2rem;
+
+  /* Abstände (8dp-Raster) */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Radien */
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-full: 9999px;
+
+  /* Schatten */
+  --shadow-sm: 0 1px 3px rgba(26, 26, 26, 0.08);
+  --shadow-md: 0 4px 12px rgba(26, 26, 26, 0.10);
+
+  /* Layout */
+  --max-width:    440px;
+  --bottom-nav-h: 64px;
+}
