@@ -62,14 +62,24 @@ function renderHome(container) {
 }
 
 function setActiveTab(tabId) {
+  if (_activeTab === 'todos') cleanupTodos();
+
   _activeTab = tabId;
   document.querySelectorAll('.nav-tab').forEach((btn, i) => {
     const active = NAV_ITEMS[i].id === tabId;
     btn.classList.toggle('active', active);
     btn.setAttribute('aria-current', active ? 'page' : 'false');
   });
+
   const content = document.getElementById('tab-content');
-  if (content) content.innerHTML = _tabContent(tabId);
+  if (!content) return;
+
+  if (tabId === 'todos') {
+    content.innerHTML = '';
+    initTodos(content);
+  } else {
+    content.innerHTML = _tabContent(tabId);
+  }
 }
 
 function _tabContent(tabId) {
@@ -84,7 +94,6 @@ function _tabContent(tabId) {
   }
   const titles = {
     uebersicht: ['Übersicht',  'Dein Überblick kommt in Stufe 2.'],
-    todos:      ['Todos',      'Eure Aufgabenliste kommt in Stufe 2.'],
     termine:    ['Termine',    'Euer Kalender kommt in Stufe 2.'],
     haushalt:   ['Haushalt',   'Haushaltsverwaltung kommt in Stufe 2.'],
   };
