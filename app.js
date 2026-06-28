@@ -55,11 +55,14 @@ async function init() {
   document.getElementById('screen-container').innerHTML =
     '<div class="loading-screen"><div class="spinner"></div></div>';
 
+  // getSession() liest aus localStorage – kein Netzwerk-Race, zuverlässig beim PWA-Restart
+  const { data: { session } } = await window.db.auth.getSession();
+  navigate(await getRoute(session));
+
+  // Nur explizite Auth-Wechsel behandeln (kein INITIAL_SESSION / TOKEN_REFRESHED)
   window.db.auth.onAuthStateChange(async (event, session) => {
-    if (event === 'SIGNED_OUT') { navigate('#/auth'); return; }
-    if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
-      navigate(await getRoute(session));
-    }
+    if (event === 'SIGNED_OUT') { navigate('#/auth'); }
+    if (event === 'SIGNED_IN')  { navigate(await getRoute(session)); }
   });
 }
 
