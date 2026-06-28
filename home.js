@@ -100,7 +100,7 @@ function _tabContent(tabId) {
       <div class="mehr-screen">
         <h1 class="screen-title">Mehr</h1>
         <div class="mehr-nav-list">
-          <button class="mehr-nav-item" onclick="window.navigate('#/household')">
+          <button class="mehr-nav-item" onclick="_openHouseholdTab()">
             <span>Haushaltsverwaltung</span>
             <svg class="mehr-nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polyline points="9 18 15 12 9 6"/>
@@ -119,6 +119,19 @@ function _tabContent(tabId) {
   const titles = {};
   const [title, text] = titles[tabId] || [tabId, ''];
   return `<div class="placeholder"><h2>${title}</h2><p>${text}</p></div>`;
+}
+
+function _openHouseholdTab() {
+  const content = document.getElementById('tab-content');
+  if (!content) return;
+  renderHousehold(content);
+  const screen = content.querySelector('.household-screen');
+  if (!screen) return;
+  const backBtn = document.createElement('button');
+  backBtn.className = 'household-back-btn';
+  backBtn.onclick = () => setActiveTab('mehr');
+  backBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg> Zurück`;
+  screen.prepend(backBtn);
 }
 
 async function logout() {

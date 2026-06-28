@@ -449,3 +449,28 @@ button, input { font-family: inherit; font-size: inherit; }
 
 .mehr-logout  { margin-top: 0; }
 .mehr-version { font-size: var(--text-xs); color: var(--c-text-muted); text-align: center; }
+
+/* ─── Haushalt-Tab (eingebettet in Home) ─────────────────── */
+.tab-content .household-screen {
+  min-height: unset;
+  padding-top: var(--space-2);
+}
+.tab-content .household-header { padding-top: var(--space-4); }
+
+.household-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  background: none;
+  border: none;
+  color: var(--c-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  padding: var(--space-2) 0;
+  min-height: 44px;
+  touch-action: manipulation;
+}
+.household-back-btn svg   { width: 18px; height: 18px; }
+.household-back-btn:hover { opacity: 0.75; }
