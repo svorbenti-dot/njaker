@@ -1,8 +1,9 @@
 /* sw.js – Service Worker für NjaKër */
-const CACHE = 'njaker-v1';
+const CACHE = 'njaker-v2';
 const SHELL = [
-  './', './index.html', './config.js', './app.js',
-  './auth.js', './household.js', './home.js',
+  './', './index.html', './config.js',
+  './ics.js', './todos.js', './termine.js', './contracts.js', './dashboard.js',
+  './auth.js', './household.js', './home.js', './app.js',
   './css/vars.css', './css/app.css',
   './manifest.json', './icons/icon.svg',
 ];

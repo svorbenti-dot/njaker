@@ -22,12 +22,13 @@ const NAV_ITEMS = [
       <line x1="3" x2="21" y1="10" y2="10"/></svg>`,
   },
   {
-    id: 'haushalt', label: 'Haushalt',
+    id: 'vertraege', label: 'Verträge',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-      <circle cx="9" cy="7" r="4"/>
-      <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-      <path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="16" x2="8" y1="13" y2="13"/>
+      <line x1="16" x2="8" y1="17" y2="17"/>
+      <polyline points="10 9 9 9 8 9"/></svg>`,
   },
   {
     id: 'mehr', label: 'Mehr',
@@ -43,9 +44,7 @@ let _activeTab = 'uebersicht';
 function renderHome(container) {
   container.innerHTML = `
     <div class="home-screen">
-      <main class="tab-content" id="tab-content" role="main">
-        ${_tabContent(_activeTab)}
-      </main>
+      <main class="tab-content" id="tab-content" role="main"></main>
       <nav class="bottom-nav" aria-label="Hauptnavigation">
         ${NAV_ITEMS.map(item => `
           <button class="nav-tab${item.id === _activeTab ? ' active' : ''}"
@@ -59,10 +58,14 @@ function renderHome(container) {
       </nav>
     </div>
   `;
+  initDashboard(document.getElementById('tab-content'));
 }
 
 function setActiveTab(tabId) {
-  if (_activeTab === 'todos') cleanupTodos();
+  if (_activeTab === 'uebersicht') cleanupDashboard();
+  if (_activeTab === 'todos')      cleanupTodos();
+  if (_activeTab === 'termine')    cleanupTermine();
+  if (_activeTab === 'vertraege')  cleanupContracts();
 
   _activeTab = tabId;
   document.querySelectorAll('.nav-tab').forEach((btn, i) => {
@@ -74,9 +77,18 @@ function setActiveTab(tabId) {
   const content = document.getElementById('tab-content');
   if (!content) return;
 
-  if (tabId === 'todos') {
+  if (tabId === 'uebersicht') {
+    content.innerHTML = '';
+    initDashboard(content);
+  } else if (tabId === 'todos') {
     content.innerHTML = '';
     initTodos(content);
+  } else if (tabId === 'termine') {
+    content.innerHTML = '';
+    initTermine(content);
+  } else if (tabId === 'vertraege') {
+    content.innerHTML = '';
+    initContracts(content);
   } else {
     content.innerHTML = _tabContent(tabId);
   }
@@ -85,18 +97,26 @@ function setActiveTab(tabId) {
 function _tabContent(tabId) {
   if (tabId === 'mehr') {
     return `
-      <div class="placeholder">
-        <h2>Mehr</h2>
-        <p>Verträge · Putzplan · Garantien · Geschenke<br>kommen in Stufe 2.</p>
-        <button class="btn-logout" onclick="logout()">Abmelden</button>
+      <div class="mehr-screen">
+        <h1 class="screen-title">Mehr</h1>
+        <div class="mehr-nav-list">
+          <button class="mehr-nav-item" onclick="window.navigate('#/household')">
+            <span>Haushaltsverwaltung</span>
+            <svg class="mehr-nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+        </div>
+        <div class="mehr-stufe3">
+          <p class="mehr-stufe3-label">Kommt in Stufe 3</p>
+          <p class="mehr-stufe3-items">🔧 Garantien &nbsp;·&nbsp; 🎁 Geschenke</p>
+        </div>
+        <button class="btn-logout mehr-logout" onclick="logout()">Abmelden</button>
+        <p class="mehr-version">NjaKër v2.0</p>
       </div>
     `;
   }
-  const titles = {
-    uebersicht: ['Übersicht',  'Dein Überblick kommt in Stufe 2.'],
-    termine:    ['Termine',    'Euer Kalender kommt in Stufe 2.'],
-    haushalt:   ['Haushalt',   'Haushaltsverwaltung kommt in Stufe 2.'],
-  };
+  const titles = {};
   const [title, text] = titles[tabId] || [tabId, ''];
   return `<div class="placeholder"><h2>${title}</h2><p>${text}</p></div>`;
 }
